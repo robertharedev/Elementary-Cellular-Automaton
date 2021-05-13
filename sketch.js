@@ -1,27 +1,58 @@
-var canvasW = 500;
+var canvasW = 800;
+var canvasH = 800;
+
 var cells = [];
-var cols = 21;
+var gen = 0;
+
+var cols = 100;
 var cellW = canvasW / cols;
 
+//var ruleset = [0, 0, 0, 1, 1, 1, 1, 0]; // rule 30
+//var ruleset = [0, 1, 0, 1, 1, 0, 1, 0]; // rule 90
+//var ruleset = [1, 0, 0, 1, 0, 1, 1, 0]; // rule 150
+//var ruleset = [1, 0, 1, 1, 1, 1, 0, 0]; // rule 188
+var ruleset = [1, 0, 0, 1, 0, 1, 1, 1]; // rule 151 (favourite)
+
 function setup() {
-  createCanvas(canvasW, canvasW);
+  createCanvas(canvasW, canvasH);
+  noStroke();
+
   for (var i = 0; i < cols; i++) {
     cells[i] = 0;
   }
-  cells[floor(cols / 2)] = 1; // start with state 1 in the middle of row
+  var middleish = floor(cols / 2);
+  cells[middleish] = 1
+  frameRate(60);
 }
 
 function draw() {
-  background(220, 220, 220);
-
   // draw the row of cells
   for (var i = 0; i < cols; i++) {
-    if (cells[i] == 0) fill(255);
-    else if (cells[i] == 1) fill(0);
-
-    rect(i * cellW, 0, cellW, cellW);
+    (cells[i] == 0) ? fill(255) : fill(0);
+    rect(i * cellW, cellW * gen, cellW, cellW); // draw the cell
   }
 
-  // change each cell colour based on rules
-  
+  if (gen < canvasH / cellW) {
+    generate(); // generate next row of cells
+  }
+}
+
+function generate() {
+  newCells = [];
+  for (var i = 1; i < cols - 1; i++) {
+    // change each cell colour based on rules
+    newCells[i] = nextGen(cells[i - 1], cells[i], cells[i + 1]);
+  }
+  cells = newCells;
+
+  gen++;
+}
+
+function nextGen(left, self, right) {
+  var index = (4*left + 2*self + right);
+  if (index >= 0 && index <= 7) {
+    return ruleset[7 - index];
+  } else {
+    return 0;
+  }
 }
