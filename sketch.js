@@ -7,7 +7,7 @@ var gen = 0;
 var rowsOfCells = 0;
 var scrollY = canvasH;
 
-var cols = 101;
+var cols = 51;                  // ##### EDIT THIS TO ADD COLUMNS OF CELLS #####
 var cellW = canvasW / cols;
 var rows = canvasH / cellW
 
@@ -24,7 +24,7 @@ var ruleset = [0, 1, 0, 1, 1, 0, 1, 0]; // rule 90
 function setup() {
   var cnv = createCanvas(canvasW, canvasH);
   noStroke();
-  frameRate(60);
+  frameRate(60);                    // ##### EDIT THIS TO CHANGE SPEED #####
 
   // initialise first row of cells
   for (var i = 0; i < cols; i++) {
@@ -40,16 +40,14 @@ function setup() {
 }
 
 function draw() {
-  //if (gen < 200) {
-    background(200);
-    drawCells();
-    deleteRow(gen); // delete row that is offscreen to keep performance stable
+  background(200);
+  drawCells();
+  deleteRow(gen); // delete row that is offscreen to keep performance stable
 
-    // keep going for x generations
-    generate(); // generate next row of cells
-    genCounter.html("Gen: " + gen); // displays generation count
-    frameDisplay.html("FPS: " + getFrameRate().toFixed(0));
-  //}
+  // keep going for x generations
+  generate(); // generate next row of cells
+  genCounter.html("Gen: " + gen); // displays generation count
+  frameDisplay.html("FPS: " + getFrameRate().toFixed(1));
 }
 
 function drawCells() {
