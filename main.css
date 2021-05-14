@@ -1,0 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+canvas {
+  top: 50%;
+}
